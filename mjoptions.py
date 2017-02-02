@@ -1,6 +1,4 @@
 import wallstreet as ws
-import yahoo_finance as yf
-import math
 
 ## Variables ## op = 'option'
 op = {
@@ -15,17 +13,34 @@ def find_strike_range_call(ticker):
 	min_strike = {'strike': None, 'delta': None}
 	max_strike = {'strike': None, 'delta': None}
 
-	stock_price = float(yf.Share(ticker).get_price())
-	stock_price_ceil = math.ceil(stock_price)
-	stock = ws.Call(ticker, strike=stock_price_ceil)
+	option = ws.Call(ticker)
+	underlying_price = option.underlying.price
+	
+	first_strike = None
+	for strike in option.strikes:
+		if strike > underlying_price:
+			first_strike_index = option.strikes.index(strike)
+			break
 
 	# find max strike
-	for i in range(0,5):
-		option = ws.Call(ticker, strike=stock_price_ceil + i)
+	for strike in option.strikes[first_strike_index:]:
+		option.set_strike(strike)
 
 		delta = option.delta()
 		if delta <= op['d']['max']:
 			max_strike = {'strike': option.strike, 'delta': delta}
+			# min_strike = {'strike': option.strike, 'delta': delta}
+			max_strike_index = option.strikes.index(strike)
+			break
+
+	# find min strike
+	for strike in option.strikes[max_strike_index + 1:]
+		option.set_strike(strike)
+
+		delta = option.delta()
+		if delta >= op['d']['min']:
+			min_strike = {'strike': option.strike, 'delta': delta}
+		else:
 			break
 
 	# find min strike

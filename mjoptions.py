@@ -9,7 +9,7 @@ op = {
 
 ## Functions
 
-def find_strike_range_call(ticker):
+def strike_range_call(ticker):
 	min_strike = {'strike': None, 'delta': None}
 	max_strike = {'strike': None, 'delta': None}
 
@@ -29,28 +29,17 @@ def find_strike_range_call(ticker):
 		delta = option.delta()
 		if delta <= op['d']['max']:
 			max_strike = {'strike': option.strike, 'delta': delta}
-			# min_strike = {'strike': option.strike, 'delta': delta}
+			min_strike = {'strike': option.strike, 'delta': delta}
 			max_strike_index = option.strikes.index(strike)
 			break
 
 	# find min strike
-	for strike in option.strikes[max_strike_index + 1:]
+	for strike in option.strikes[max_strike_index + 1:]:
 		option.set_strike(strike)
 
 		delta = option.delta()
 		if delta >= op['d']['min']:
 			min_strike = {'strike': option.strike, 'delta': delta}
-		else:
 			break
 
-	# find min strike
-	for i in range(0,5):
-		option = ws.Call(ticker, strike=max_strike['strike'] + i)
-
-		delta = option.delta()
-		if delta <= op['d']['min']: 
-			break
-		else:
-			min_strike = {'strike': option.strike, 'delta': delta}
-
-	return min_strike, max_strike
+	return {'min_strike': min_strike, 'max_strike': max_strike}

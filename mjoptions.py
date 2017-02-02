@@ -5,13 +5,13 @@ import math
 ## Variables ## op = 'option'
 op = {
 	'duration': {'min': 20, 'max': 40}, # measured in days
-	'bwd' = {'min:': -200, 'max': 200}, # bwd = beta-weighted delta
-	'd' = {'min': .08, 'max': .25}, # d = delta
+	'bwd': {'min:': -200, 'max': 200}, # bwd = beta-weighted delta
+	'd': {'min': .08, 'max': .25}, # d = delta
 }
 
 ## Functions
 
-def find_strike_range_call(ticker=ticker):
+def find_strike_range_call(ticker):
 	min_strike = {'strike': None, 'delta': None}
 	max_strike = {'strike': None, 'delta': None}
 

@@ -7,3 +7,5 @@
 5. If real cash and live data works, attempt to automate it.
 ## Notes
 * Reference materials can be found in references.md
+* Need to figure out what format purchased option chain data comes in. Preferably start with SPY
+* Backtest in monthly increments to avoid overfitting.

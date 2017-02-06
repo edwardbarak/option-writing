@@ -9,3 +9,4 @@
 * Reference materials can be found in references.md
 * Need to figure out what format purchased option chain data comes in. Preferably start with SPY
 * Backtest in monthly increments to avoid overfitting.
+* Activate virtualenv with 'python3 -m source venv/bin/activate' in command line. 'python3 -m deactivate' to deactivate virtualenv.
